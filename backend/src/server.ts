@@ -92,7 +92,8 @@ server.listen(PORT, () => {
   console.log(`📡 WebSocket server ready for real-time updates`);
   console.log(`🔗 API available at http://localhost:${PORT}/api`);
   
-  // Initialize AI service
+  // Initialize AI service and set WebSocket server
+  AIService.setWebSocketServer(wss);
   AIService.initialize().then(() => {
     console.log('🤖 AI Service initialized successfully');
   }).catch((error) => {

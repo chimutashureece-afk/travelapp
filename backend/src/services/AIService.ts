@@ -2,13 +2,14 @@ import { spawn, ChildProcess } from 'child_process';
 import path from 'path';
 import fs from 'fs/promises';
 import { AIGenerationRequest, PythonBridgeRequest, PythonBridgeResponse } from '../types';
-import { wss } from '../server';
+import { WebSocketServer } from 'ws';
 
 class AIServiceClass {
   private pythonProcess: ChildProcess | null = null;
   private isInitialized = false;
   private activeGenerations = new Map<string, ChildProcess>();
   private aiEnginePath: string;
+  private wss: WebSocketServer | null = null;
 
   constructor() {
     this.aiEnginePath = path.join(__dirname, '../../../ai_engine');
@@ -203,6 +204,10 @@ class AIServiceClass {
     });
   }
 
+  setWebSocketServer(wss: WebSocketServer): void {
+    this.wss = wss;
+  }
+
   private broadcastProgress(generationId: string, progress: number, message: string): void {
     const progressMessage = {
       type: 'ai_progress',
@@ -215,11 +220,13 @@ class AIServiceClass {
     };
 
     // Broadcast to all connected WebSocket clients
-    wss.clients.forEach((client) => {
-      if (client.readyState === client.OPEN) {
-        client.send(JSON.stringify(progressMessage));
-      }
-    });
+    if (this.wss) {
+      this.wss.clients.forEach((client) => {
+        if (client.readyState === client.OPEN) {
+          client.send(JSON.stringify(progressMessage));
+        }
+      });
+    }
   }
 
   // Utility methods
