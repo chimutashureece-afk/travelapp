@@ -1,0 +1,40 @@
+# Core AI/ML libraries
+torch>=2.1.0
+torchvision>=0.16.0
+torchaudio>=2.1.0
+
+# Diffusers and Transformers
+diffusers>=0.24.0
+transformers>=4.36.0
+accelerate>=0.25.0
+
+# Image and video processing
+opencv-python>=4.8.0
+pillow>=10.1.0
+imageio>=2.33.0
+imageio-ffmpeg>=0.4.9
+
+# Utilities
+numpy>=1.24.0
+scipy>=1.11.0
+scikit-image>=0.22.0
+
+# ControlNet support
+controlnet-aux>=0.4.0
+
+# Model management
+huggingface-hub>=0.19.0
+safetensors>=0.4.0
+
+# Progress and logging
+tqdm>=4.66.0
+wandb>=0.16.0
+
+# System utilities
+psutil>=5.9.0
+GPUtil>=1.4.0
+
+# Optional CUDA support (uncomment if using NVIDIA GPU)
+# torch-audio>=2.1.0+cu118
+# torch>=2.1.0+cu118
+# torchvision>=0.16.0+cu118

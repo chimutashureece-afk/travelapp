@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olori Animate - Interactive Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card { @apply bg-white rounded-xl shadow-sm border border-gray-200 p-6; }
+        .btn-primary { @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200; }
+        .btn-secondary { @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200; }
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900">🎬 Olori Animate</h1>
+                    <span class="ml-2 text-sm text-gray-500">v1.0.0</span>
+                    <span class="ml-2 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">✅ LIVE DEMO</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="btn-secondary" onclick="showAlert('Settings panel would open here!')">⚙️ Settings</button>
+                    <button class="btn-primary" onclick="showAlert('Export feature would download your animations!')">📤 Export</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Input Panel -->
+                <div class="lg:col-span-1">
+                    <div class="card">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Create Animation</h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Prompt</label>
+                                <textarea id="promptInput" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" rows="4" placeholder="Describe your animation...">A magical forest with glowing mushrooms at sunset</textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Style</label>
+                                <select id="styleSelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="realistic">Realistic</option>
+                                    <option value="cartoon">Cartoon</option>
+                                    <option value="anime">Anime</option>
+                                    <option value="3d">3D Render</option>
+                                </select>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                                    <select id="durationSelect" class="w-full p-3 border border-gray-300 rounded-lg">
+                                        <option value="2">2 seconds</option>
+                                        <option value="4" selected>4 seconds</option>
+                                        <option value="8">8 seconds</option>
+                                        <option value="16">16 seconds</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Quality</label>
+                                    <select id="qualitySelect" class="w-full p-3 border border-gray-300 rounded-lg">
+                                        <option value="draft">Draft</option>
+                                        <option value="standard" selected>Standard</option>
+                                        <option value="high">High</option>
+                                        <option value="ultra">Ultra</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button id="generateBtn" onclick="generateAnimation()" class="w-full py-3 px-4 rounded-lg font-medium btn-primary">
+                                🎬 Generate Animation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="lg:col-span-2">
+                    <div class="card h-full">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Preview</h2>
+                        
+                        <div id="previewArea" class="bg-gray-100 rounded-lg h-64 lg:h-96 flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-gray-500">Your animation will appear here</p>
+                                <p class="text-sm text-gray-400 mt-2">Click "Generate Animation" to start</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <button class="p-2 bg-gray-200 rounded-lg hover:bg-gray-300" title="Settings" onclick="showAlert('Video settings would open here!')">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+                                    </svg>
+                                </button>
+                                <button class="p-2 bg-gray-200 rounded-lg hover:bg-gray-300" title="Refresh" onclick="resetPreview()">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div id="statusText" class="text-sm text-gray-500">
+                                Ready to generate
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Generated Videos History -->
+            <div class="mt-8">
+                <div class="card">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">📹 Generated Videos (From Your Live App)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="videosGrid">
+                        <!-- Videos will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Projects -->
+            <div class="mt-8">
+                <div class="card">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">📚 Recent Projects</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4" id="projectsGrid">
+                        <!-- Projects will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Status Bar -->
+    <div id="statusBar" class="fixed bottom-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Backend: ✅ Frontend: ✅ AI Engine: ✅
+        </div>
+    </div>
+
+    <!-- Toast Messages -->
+    <div id="toast" class="fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        <div class="flex items-center">
+            <span id="toastText"></span>
+        </div>
+    </div>
+
+    <script>
+        // Generated videos from your actual app
+        const generatedVideos = [
+            {
+                id: "4735e4f7-82c7-42f4-870a-45facd6451a8",
+                prompt: "A magical forest with glowing mushrooms",
+                status: "completed",
+                created: "2025-08-26T07:50:10.356Z",
+                file: "magical-forest-4735e4f7.mp4",
+                style: "realistic"
+            },
+            {
+                id: "9b098559-0a6c-46b9-91a6-9a777dfcc7f1", 
+                prompt: "A dancing robot",
+                status: "completed",
+                created: "2025-08-26T07:48:37.663Z",
+                file: "dancing-robot-9b098559.mp4",
+                style: "3d"
+            },
+            {
+                id: "41b77044-4a1f-4cb7-801f-2fe8c453d49b",
+                prompt: "Flying butterfly in garden",
+                status: "completed", 
+                created: "2025-08-26T07:50:06.300Z",
+                file: "butterfly-41b77044.mp4",
+                style: "realistic"
+            }
+        ];
+
+        // Projects
+        const projects = [
+            { name: "Magical Forest", status: "completed", color: "green", time: "2 min ago" },
+            { name: "Dancing Robot", status: "completed", color: "blue", time: "12 min ago" },
+            { name: "Flying Butterfly", status: "completed", color: "purple", time: "15 min ago" },
+            { name: "New Project", status: "create", color: "yellow", time: "Create new" }
+        ];
+
+        function showAlert(message) {
+            showToast(message);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toastText');
+            toastText.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        function generateAnimation() {
+            const btn = document.getElementById('generateBtn');
+            const previewArea = document.getElementById('previewArea');
+            const statusText = document.getElementById('statusText');
+            const prompt = document.getElementById('promptInput').value;
+            const style = document.getElementById('styleSelect').value;
+            const duration = document.getElementById('durationSelect').value;
+            const quality = document.getElementById('qualitySelect').value;
+
+            if (!prompt.trim()) {
+                showToast('❌ Please enter a prompt!');
+                return;
+            }
+
+            // Update UI to show generation in progress
+            btn.innerHTML = '<div class="flex items-center justify-center"><div class="spinner rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>Generating...</div>';
+            btn.disabled = true;
+            statusText.textContent = 'Generating animation...';
+
+            // Show loading in preview
+            previewArea.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+                    <p class="text-blue-600 font-medium">Generating "${prompt}"</p>
+                    <p class="text-sm text-gray-500 mt-2">Style: ${style} | Duration: ${duration}s | Quality: ${quality}</p>
+                    <div class="mt-4 bg-gray-200 rounded-full h-2 w-48 mx-auto">
+                        <div class="bg-blue-500 h-2 rounded-full transition-all duration-1000" style="width: 0%" id="progressBar"></div>
+                    </div>
+                </div>
+            `;
+
+            // Simulate progress
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const progressInterval = setInterval(() => {
+                progress += 20;
+                progressBar.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 400);
+
+            // Simulate generation completion
+            setTimeout(() => {
+                const videoId = 'demo-' + Date.now();
+                const fileName = `${prompt.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${videoId.slice(-8)}.mp4`;
+
+                // Show success
+                previewArea.innerHTML = `
+                    <div class="text-center fade-in">
+                        <div class="w-16 h-16 bg-green-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <p class="text-green-600 font-medium">✅ Generation Complete!</p>
+                        <p class="text-sm text-gray-600 mt-2">Video: ${fileName}</p>
+                        <p class="text-xs text-gray-500 mt-1">Prompt: "${prompt}"</p>
+                        <button onclick="downloadDemo()" class="mt-4 btn-primary">📥 Download Demo</button>
+                    </div>
+                `;
+
+                // Reset button
+                btn.innerHTML = '🎬 Generate Animation';
+                btn.disabled = false;
+                statusText.innerHTML = '<span class="text-green-600">✅ Animation generated successfully</span>';
+
+                // Add to generated videos list
+                generatedVideos.unshift({
+                    id: videoId,
+                    prompt: prompt,
+                    status: "completed",
+                    created: new Date().toISOString(),
+                    file: fileName,
+                    style: style
+                });
+
+                // Update videos grid
+                updateVideosGrid();
+                showToast('🎉 Animation generated successfully!');
+            }, 2000);
+        }
+
+        function resetPreview() {
+            const previewArea = document.getElementById('previewArea');
+            const statusText = document.getElementById('statusText');
+            
+            previewArea.innerHTML = `
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-500">Your animation will appear here</p>
+                    <p class="text-sm text-gray-400 mt-2">Click "Generate Animation" to start</p>
+                </div>
+            `;
+            statusText.textContent = 'Ready to generate';
+            showToast('Preview reset');
+        }
+
+        function downloadDemo() {
+            showToast('📥 In the real app, this would download your generated MP4 file!');
+        }
+
+        function updateVideosGrid() {
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = generatedVideos.slice(0, 6).map(video => `
+                <div class="bg-gray-50 rounded-lg p-4 hover:bg-gray-100 transition-colors cursor-pointer" onclick="showVideoDetails('${video.id}')">
+                    <div class="bg-green-100 border-2 border-green-300 h-32 rounded mb-3 flex items-center justify-center">
+                        <div class="text-center">
+                            <svg class="w-8 h-8 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h6m-6 0v6m0-6H7m6 0h6"></path>
+                            </svg>
+                            <span class="text-xs text-green-700">✅ ${video.style}</span>
+                        </div>
+                    </div>
+                    <p class="text-sm font-medium text-gray-900">${video.prompt}</p>
+                    <p class="text-xs text-gray-500 mt-1">${video.file}</p>
+                    <p class="text-xs text-gray-400">${new Date(video.created).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateProjectsGrid() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = projects.map(project => `
+                <div class="bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-colors cursor-pointer" onclick="showAlert('Project: ${project.name}')">
+                    <div class="bg-${project.color}-300 h-24 rounded mb-2 flex items-center justify-center">
+                        <span class="text-${project.color}-800 font-semibold">
+                            ${project.status === 'completed' ? '✅' : project.status === 'create' ? '+' : '🎬'}
+                        </span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-900">${project.name}</p>
+                    <p class="text-xs text-gray-500">${project.time}</p>
+                </div>
+            `).join('');
+        }
+
+        function showVideoDetails(id) {
+            const video = generatedVideos.find(v => v.id === id);
+            if (video) {
+                showAlert(`📹 Video: ${video.prompt}\n🎨 Style: ${video.style}\n📁 File: ${video.file}\n⏰ Created: ${new Date(video.created).toLocaleString()}`);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateVideosGrid();
+            updateProjectsGrid();
+            showToast('🎉 Welcome to Olori Animate! This is your live app demo.');
+        });
+
+        // Random prompts for inspiration
+        const samplePrompts = [
+            "A magical forest with glowing mushrooms at sunset",
+            "A robot dancing in a neon-lit cyberpunk city",
+            "A butterfly flying through a field of flowers",
+            "A dragon soaring over snowy mountains",
+            "A cat playing with floating bubbles",
+            "An underwater scene with colorful fish",
+            "A wizard casting spells in an ancient tower"
+        ];
+
+        function getRandomPrompt() {
+            const prompt = samplePrompts[Math.floor(Math.random() * samplePrompts.length)];
+            document.getElementById('promptInput').value = prompt;
+            showToast('💡 Random prompt added! Click Generate to see it in action.');
+        }
+
+        // Add random prompt button
+        document.addEventListener('DOMContentLoaded', function() {
+            const promptDiv = document.querySelector('textarea').parentElement;
+            const randomBtn = document.createElement('button');
+            randomBtn.className = 'mt-2 text-sm text-blue-600 hover:text-blue-800';
+            randomBtn.textContent = '💡 Get random prompt';
+            randomBtn.onclick = getRandomPrompt;
+            promptDiv.appendChild(randomBtn);
+        });
+    </script>
+
+</body>
+</html>
