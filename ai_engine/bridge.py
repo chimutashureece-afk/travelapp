@@ -144,11 +144,14 @@ class AIBridge:
             logger.info(f"Starting animation generation for ID: {generation_id}")
             
             # Generate animation using the video generator
+            # Remove conflicting params to avoid duplicate keyword arguments
+            filtered_params = {k: v for k, v in params.items() 
+                             if k not in ['generation_id', 'prompt', 'model']}
             result = self.video_generator.generate(
                 prompt=prompt,
                 model=model,
                 generation_id=generation_id,
-                **params
+                **filtered_params
             )
             
             return {
