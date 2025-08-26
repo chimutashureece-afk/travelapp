@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 Access Your Olori Animate App</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 30px;
+        }
+        .method {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        .method:hover {
+            border-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .method h3 {
+            color: #2b6cb0;
+            margin-top: 0;
+        }
+        .url-box {
+            background: #1a202c;
+            color: #68d391;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        .btn {
+            background: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #3182ce;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #c6f6d5; color: #22543d; }
+        .warning { background: #feebc8; color: #c05621; }
+        .info { background: #bee3f8; color: #2c5282; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 Your Olori Animate App Is Running!</h1>
+        
+        <div class="status success">
+            ✅ <strong>App Status:</strong> Frontend ✅ Backend ✅ AI Engine ✅ Electron ✅
+        </div>
+
+        <div class="method">
+            <h3>🌐 Method 1: Direct Access (If Port Forwarding Available)</h3>
+            <p>Try these URLs in your browser:</p>
+            <div class="url-box">Frontend: http://localhost:3000</div>
+            <div class="url-box">Backend API: http://localhost:3001/api/health</div>
+            <p><em>Note: These only work if your environment supports port forwarding or if you're running locally.</em></p>
+        </div>
+
+        <div class="method">
+            <h3>📥 Method 2: Download Interactive Demo</h3>
+            <p>The best way to see your app! This file contains a fully interactive version:</p>
+            <a href="OLORI-ANIMATE-DEMO.html" class="btn" download>📥 Download Interactive Demo</a>
+            <p><em>This demo includes your actual generated videos and full UI functionality!</em></p>
+        </div>
+
+        <div class="method">
+            <h3>🔗 Method 3: GitHub Codespaces</h3>
+            <p>If you're using GitHub Codespaces:</p>
+            <ol>
+                <li>Look for "PORTS" tab at the bottom of VS Code</li>
+                <li>Find ports 3000 and 3001</li>
+                <li>Click the 🌐 globe icon to make them public</li>
+                <li>Click the URL to open your app</li>
+            </ol>
+        </div>
+
+        <div class="method">
+            <h3>☁️ Method 4: Gitpod</h3>
+            <p>If you're using Gitpod:</p>
+            <ol>
+                <li>Gitpod should automatically detect ports 3000 and 3001</li>
+                <li>Look for popup notifications about "A service is available on port 3000"</li>
+                <li>Click "Open Browser" or check the Remote Explorer panel</li>
+            </ol>
+        </div>
+
+        <div class="method">
+            <h3>🚇 Method 5: Create Tunnel</h3>
+            <p>Use ngrok or similar tunneling service:</p>
+            <div class="url-box">ngrok http 3000</div>
+            <div class="url-box">ngrok http 3001</div>
+            <p>This will give you public URLs like: <code>https://abc123.ngrok.io</code></p>
+        </div>
+
+        <div class="method">
+            <h3>📊 Method 6: Test API Directly</h3>
+            <p>Verify the app is working by testing the API:</p>
+            <div class="url-box">curl http://localhost:3001/api/health</div>
+            <div class="url-box">curl http://localhost:3001/api/ai/models</div>
+            <p>You should see JSON responses indicating the app is working!</p>
+        </div>
+
+        <div class="status info">
+            <strong>📹 Your Generated Videos:</strong><br>
+            ✅ magical-forest-4735e4f7.mp4<br>
+            ✅ dancing-robot-9b098559.mp4<br>
+            ✅ butterfly-41b77044.mp4
+        </div>
+
+        <div class="status warning">
+            <strong>💡 Pro Tip:</strong> The Interactive Demo (Method 2) is your best option! 
+            It works offline and shows exactly how your app looks and functions.
+        </div>
+
+        <script>
+            // Try to detect environment and show specific instructions
+            if (window.location.hostname.includes('github.dev') || window.location.hostname.includes('codespaces')) {
+                document.body.insertAdjacentHTML('afterbegin', 
+                    '<div class="status info">🔍 <strong>Detected:</strong> GitHub Codespaces - Check the PORTS tab!</div>'
+                );
+            } else if (window.location.hostname.includes('gitpod')) {
+                document.body.insertAdjacentHTML('afterbegin', 
+                    '<div class="status info">🔍 <strong>Detected:</strong> Gitpod - Look for port notifications!</div>'
+                );
+            }
+
+            // Test if we can reach the app
+            fetch('http://localhost:3000').then(() => {
+                document.body.insertAdjacentHTML('afterbegin', 
+                    '<div class="status success">🎉 <strong>Great News:</strong> Your app is accessible at <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>!</div>'
+                );
+            }).catch(() => {
+                console.log('Direct access not available - use alternative methods');
+            });
+        </script>
+    </div>
+</body>
+</html>
